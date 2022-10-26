@@ -5,12 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class CrashDetector : MonoBehaviour
 {
+    public float respawnTime = 1.2f;
+    
     void OnTriggerEnter2D(Collider2D other) 
     {
         if (other.tag == "Ground")
         {
-            Debug.Log("Ouchie!");
-            SceneManager.LoadScene("Level1");
+            Invoke("death", respawnTime);
         }
+    }
+
+    void death() {
+        Debug.Log("You finished!");
+        SceneManager.LoadScene("Level1");
     }
 }

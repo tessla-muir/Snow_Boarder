@@ -5,12 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class FinishLine : MonoBehaviour
 {
-    
+    public float finishTime = 1.2f;
+
     void OnTriggerEnter2D(Collider2D other) 
     {
         if (other.tag == "Player") {
-            Debug.Log("You finished!");
-            SceneManager.LoadScene("Level1");
+            Invoke("finish", finishTime);
         }
+    }
+
+    void finish() {
+        Debug.Log("You finished!");
+        SceneManager.LoadScene("Level1");
     }
 }
