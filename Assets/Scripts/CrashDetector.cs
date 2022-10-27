@@ -8,11 +8,14 @@ public class CrashDetector : MonoBehaviour
     public float respawnTime = 1.2f;
     public ParticleSystem deathEffect;
     public AudioSource deathSound;
+    bool hasDied = false;
 
     void OnTriggerEnter2D(Collider2D other) 
     {
-        if (other.tag == "Ground")
+        if (other.tag == "Ground" && !hasDied)
         {
+            hasDied = true;
+            FindObjectOfType<PlayerController>().DisableControls();
             deathEffect.Play();
             deathSound.Play();
             Invoke("death", respawnTime);

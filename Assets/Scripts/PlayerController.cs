@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     public float torqueAmount = 1.5f;
     public float normalSpeed = 12f;
     public float boostSpeed = 20f;
+    bool canMove = true;
     
 
     Rigidbody2D rb;
@@ -20,8 +21,15 @@ public class PlayerController : MonoBehaviour
 
     void Update() 
     {
-        RotatePlayer();
-        RespondToBoost();
+        if (canMove) {
+            RotatePlayer();
+            RespondToBoost();
+        }
+    }
+
+    public void DisableControls() 
+    {
+        canMove = false;
     }
 
     // Rotates player based on keyboard input
