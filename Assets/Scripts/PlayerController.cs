@@ -4,21 +4,47 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] float torqueAmount = 1.5f;
-    Rigidbody2D rg2d;
+    public float torqueAmount = 1.5f;
+    public float normalSpeed = 12f;
+    public float boostSpeed = 20f;
+    
+
+    Rigidbody2D rb;
+    SurfaceEffector2D surfaceEffector2D;
 
     void Start()
     {
-       rg2d = GetComponent<Rigidbody2D>();
+       rb = GetComponent<Rigidbody2D>();
+       surfaceEffector2D = FindObjectOfType<SurfaceEffector2D>();
     }
 
     void Update() 
     {
+        RotatePlayer();
+        RespondToBoost();
+    }
+
+    // Rotates player based on keyboard input
+    void RotatePlayer() 
+    {
         if (Input.GetKey(KeyCode.LeftArrow)) {
-            rg2d.AddTorque(torqueAmount);
+            rb.AddTorque(torqueAmount);
         }
-        if (Input.GetKey(KeyCode.RightArrow)) {
-            rg2d.AddTorque(-torqueAmount);
+        else if (Input.GetKey(KeyCode.RightArrow)) {
+            rb.AddTorque(-torqueAmount);
+        }
+    }
+
+    // Boost player if player pushes up key
+    void RespondToBoost()
+    {
+        if (Input.GetAxis("Vertical") > 0 || Input.GetKey("up"))
+        {
+            surfaceEffector2D.speed = boostSpeed;
+        }
+        else
+        {
+            surfaceEffector2D.speed = normalSpeed;
         }
     }
 }
